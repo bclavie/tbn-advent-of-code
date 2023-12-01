@@ -1,4 +1,4 @@
-﻿let input = System.IO.File.ReadAllLines("day01/input.txt")
+﻿let input = System.IO.File.ReadAllLines("input/day01.txt")
 
 let digits = "123456789".ToCharArray()
 

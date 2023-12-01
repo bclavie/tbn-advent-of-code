@@ -1,2 +1,10 @@
 *input*
 *data*
+
+# Visual Studio and .NET enjoyers
+.vs/
+bin/
+obj/
+*.fsproj
+*.csproj
+*.sln

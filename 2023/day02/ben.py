@@ -7,8 +7,6 @@ def solve(lines: list[str], part1_limits: dict[str, int]) -> int:
     part1_total = 0
     part2_powers = 0
     for game_id, line in enumerate(lines):
-        num_pairs = len(re.findall(r",", line))
-        print(f"Game {game_id + 1}: {num_pairs} pairs")
         bag = defaultdict(int)
         for num, col in re.findall(r"(\d+) (\w+)", line):
             bag[col] = max(bag[col], int(num))

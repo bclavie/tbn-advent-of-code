@@ -1,16 +1,8 @@
 ﻿using System.Text.RegularExpressions;
 
-namespace tbn_advent_of_code_2023.day02
+namespace tbn_advent_of_code_csharp._2023.day02
 {
-    internal class yuri
-    {
-        static void Main(string[] args)
-        {
-            new FuckThisShit().aaaaaaaaaa();
-        }
-    }
-
-    internal class FuckThisShit
+    internal class Day2 
     {
         internal void aaaaaaaaaa()
         {

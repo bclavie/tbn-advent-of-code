@@ -10,7 +10,7 @@ import java.util.regex.Pattern;
 
 public class Day3 {
 
-    public static final Pattern numberPattern = Pattern.compile("\\d+");
+    public static final Pattern partPattern = Pattern.compile("\\d+");
 
     public static final Pattern characterPattern = Pattern.compile("[^\\d.]");
 
@@ -24,14 +24,14 @@ public class Day3 {
     public static void part2() throws FileNotFoundException {
         List<String> lines = readFile("Day3.txt");
         List<Coordinate> potentialGears = getPotentialGears(lines);
-        List<Part> parts = getNumberRows(lines);
+        List<Part> parts = getParts(lines);
         int gearScore = calculateGearScore(potentialGears, parts);
         System.out.println(gearScore);
     }
 
     public static void part1() throws FileNotFoundException {
         List<String> lines = readFile("Day3.txt");
-        List<Part> parts = getNumberRows(lines);
+        List<Part> parts = getParts(lines);
         List<Coordinate> symbols = getSymbols(lines);
         List<Part> partsInUse = getPartsInUse(parts, symbols);
         int sum = 0;
@@ -118,11 +118,11 @@ public class Day3 {
         return result;
     }
 
-    public static List<Part> getNumberRows(List<String> lines) {
+    public static List<Part> getParts(List<String> lines) {
         List<Part> result = new ArrayList<>();
         for (int i = 0; i < lines.size(); i++) {
             String line = lines.get(i);
-            Matcher matcher = numberPattern.matcher(line);
+            Matcher matcher = partPattern.matcher(line);
             int currentIndex = 0;
             while (matcher.find(currentIndex)) {
                 Part part = new Part();
@@ -146,7 +146,7 @@ public class Day3 {
 
         @Override
         public String toString() {
-            return "NumberRow{" +
+            return "Part{" +
                     "minX=" + minX +
                     ", maxX=" + maxX +
                     ", y=" + y +

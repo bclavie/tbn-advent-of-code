@@ -1,7 +1,9 @@
 from collections import defaultdict
 
 cards = [x.strip() for x in open("input.txt", "r").readlines()]
+# init p1
 part_1_score = 0
+# init p2
 card_copies = defaultdict(int)
 
 for current_card_idx, card in enumerate(cards):

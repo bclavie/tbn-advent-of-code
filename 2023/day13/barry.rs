@@ -95,7 +95,6 @@ fn find_almost_reflection(area: &[Vec<char>]) -> Option<usize> {
     None
 }
 
-// Returns the index at which the lines differ by 1. Otherwise returns None.
 fn lines_differ(l1: &[char], l2: &[char]) -> i64 {
     let mut num_diff = 0;
     for i in 0..l1.len() {

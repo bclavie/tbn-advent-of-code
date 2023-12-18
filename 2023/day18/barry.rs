@@ -57,8 +57,11 @@ fn main() {
 }
 
 // Picks theorem is:
-// Area = Sum of Interior + Sum of Perimeter/2 + 1;
-// Shoelace gets you a way to get Sum of Interior.
+// Area = Sum of Interior + (Sum of boundary points)/2 - 1;
+// Shoelace gets you a way to get area. 
+// The problem asks you to count the total number of points inside and on the boundary ( which is the perimeter value).
+// Area + 1 = sum of interior + (sum of boundary) / 2
+// Area + 1 + sum of boundary / 2 = sum of interior + sum of boundary = solution.
 fn area_theorem(corners: &[(i64, i64)], instructions: &[Instruction]) -> u64 {
     // Shoelace
     let mut sum_of_determinants: i64 = 0;

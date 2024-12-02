@@ -24,7 +24,6 @@ public class Day02 : Solution<int[][], int>
 
 	private static bool IsSafe(int[] report, bool dampener = false)
 	{
-		bool badLevelEncountered = false;
 		Trend? reportTrend = null;
 
 		for (int i = 1; i < report.Length; i++)
@@ -32,25 +31,46 @@ public class Day02 : Solution<int[][], int>
 			var currentLevel = report[i];
 			var previousLevel = report[i - 1];
 
-			if (i == 1)
-			{
-				reportTrend = currentLevel - previousLevel < 0 ? Trend.Decreasing : Trend.Increasing;
-			}
-
 			var difference = currentLevel - previousLevel;
 
-			if (difference == 0 ||
-				reportTrend != (difference < 0 ? Trend.Decreasing : Trend.Increasing) ||
-				Math.Abs(difference) > 3)
+			if (i == 1)
 			{
-				if (!dampener || badLevelEncountered)
-					return false;
-
-				badLevelEncountered = true;
+				reportTrend = difference < 0 ? Trend.Decreasing : Trend.Increasing;
 			}
+
+			var levelIsSafe = !(difference == 0 ||
+				reportTrend != (difference < 0 ? Trend.Decreasing : Trend.Increasing) ||
+				Math.Abs(difference) > 3);
+
+			if (levelIsSafe)
+				continue;
+
+			if (!dampener)
+			{
+				return false;
+			}
+
+			// At this point the report is unsafe but we have a damper:
+			// Check if any subsequence of this report with 1 level removed would be safe
+			for (int j = 0; j < report.Length; j++)
+			{
+				if (IsSafe(SkipLevel(report, j)))
+				{
+					return true;
+				}
+			}
+
+			return false;
 		}
 
 		return true;
+	}
+
+	private static int[] SkipLevel(int[] report, int levelToSkip)
+	{
+		var damped = report.ToList();
+		damped.RemoveAt(levelToSkip);
+		return damped.ToArray();
 	}
 
 	public override int Part1(int[][] input)

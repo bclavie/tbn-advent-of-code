@@ -9,17 +9,7 @@ fn main() {
         .lines()
         .map(|l| l.split(',').map(|s| s.parse().unwrap()).collect())
         .collect();
-
-    // // Map: Page -> Set of Pages that must come after.
-    // let mut after_rules = HashMap::<&str, HashSet<&str>>::new();
-    // // Page -> Set of Pages that must come before.
-    // let mut before_rules = HashMap::<&str, HashSet<&str>>::new();
-    // for rule in ordering_rules.lines() {
-    //     let (left, right) = rule.split_once('|').unwrap();
-    //     after_rules.entry(left).or_default().insert(right);
-    //     before_rules.entry(right).or_default().insert(left);
-    // }
-
+    
     // Store a hashset of all the tuples
     let mut rule_tuples = HashSet::<(i64, i64)>::new();
     for rule in ordering_rules.lines() {

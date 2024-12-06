@@ -127,27 +127,28 @@ public class Day6 : Solution<char[][], int>
 	public override int Part2(char[][] input)
 	{
 		var guardStartingPos = FindGuardStartingPosition(input);
-		bool didLoop = false;
-		var visitedPoints = new HashSet<Point>(SimulateCompleteWalk(input, out didLoop).Select(x => x.Position));
+		var visitedPositions = SimulateCompleteWalk(input, out _).Select(x => x.Position).Distinct().ToArray();
 
-		// All visited points where turning 90 degrees would put us on a path towards another obstacle
-		var numberOfPotentialLoops = 0;
-		foreach (var point in visitedPoints)
+		int batchSize = Math.Max(1, visitedPositions.Length / Environment.ProcessorCount);
+		var results = new int[Environment.ProcessorCount];
+
+		Parallel.For(0, Environment.ProcessorCount, processorIndex =>
 		{
-			// Can't place obstacle on starting position
-			if (point == guardStartingPos)
-			{
-				continue;
-			}
+			int start = processorIndex * batchSize;
+			int end = processorIndex == Environment.ProcessorCount - 1 ? visitedPositions.Length : (processorIndex + 1) * batchSize;
 
-			// Place obstacle here and see if it loops
-			SimulateCompleteWalk(input, out didLoop, point);
-			if (didLoop)
+			for (int i = start; i < end; i++)
 			{
-				numberOfPotentialLoops++;
+				var position = visitedPositions[i];
+				if (position != guardStartingPos)
+				{
+					SimulateCompleteWalk(input, out bool didLoop, position);
+					if (didLoop)
+						results[processorIndex]++;
+				}
 			}
-		}
+		});
 
-		return numberOfPotentialLoops;
+		return results.Sum();
 	}
 }

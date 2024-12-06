@@ -41,18 +41,25 @@ public class Day6 : Solution<char[][], int>
 		};
 	}
 
-	struct WalkStep
+	readonly struct WalkStep : IEquatable<WalkStep>
 	{
-		public Point Position { get; init; }
-		public Direction Direction { get; init; }
+		public readonly Point Position;
+		public readonly Direction Direction;
 
 		public WalkStep(Point position, Direction direction)
 		{
 			Position = position;
 			Direction = direction;
 		}
-	}
 
+		public bool Equals(WalkStep other) =>
+			Position.X == other.Position.X &&
+			Position.Y == other.Position.Y &&
+			Direction == other.Direction;
+
+		public override int GetHashCode() =>
+			HashCode.Combine(Position.X, Position.Y, Direction);
+	}
 
 	static HashSet<WalkStep> SimulateCompleteWalk(char[][] input, out bool didLoop, Point? obstaclePos = null)
 	{

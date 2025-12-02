@@ -7,15 +7,13 @@ fun Long.isValidId(): Boolean {
         .none { substring -> substring.repeat(asString.length / substring.length) == asString }
 }
 
-fun LongRange.invalidIds() = filterNot(Long::isValidId)
-
 val file = File("./input.txt")
 val invalidIds = file.readLines()
     .flatMap { it.split(",") }
     .filterNot(CharSequence::isBlank)
     .flatMap { seq ->
         val (start, end) = seq.split("-").map(String::toLong)
-        (start..end).invalidIds()
+        (start..end).filterNot(Long::isValidId)
     }
 
 println("sum: ${invalidIds.sum()}")
